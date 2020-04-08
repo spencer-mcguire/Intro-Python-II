@@ -1,6 +1,9 @@
 from room import Room
 from player import Player
+import os
 
+# Clear screen and get ready to input name
+os.system('cls')
 # Declare all the rooms
 
 room = {
@@ -39,7 +42,16 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("spencer", room['outside'])
+user = input('Hello, What is your name? ')
+player = Player(user, room['outside'])
+# clear screen after name input
+os.system('cls')
+
+print("==================================")
+print(f"Welcome brave {player.name}")
+print(f"Your current room is: {player.current_room.name}\n")
+print(f"{player.current_room.description}")
+print("==================================\n")
 # Write a loop that:
 #
 # * Prints the current room name
@@ -52,18 +64,13 @@ player = Player("spencer", room['outside'])
 # If the user enters "q", quit the game.
 active = True
 
-while active is True:
+while active == True:
     # Destructure values
     current_room = player.current_room
 
-    print("==================================\n")
-    print(f"Current room: {current_room.name}")
-    print(f"{current_room.description}")
-    print("==================================\n")
-
     # Commands
     command = input(
-        'Please provide a direction to move [n][s][e][w]: ').lower().split(" ")
+        'Please provide a direction of travel [n][s][e][w]: ').lower().split(" ")
 
     if len(command) < 2:
         command = command[0]
@@ -71,7 +78,7 @@ while active is True:
         if command == 'n':
             if player.current_room.n_to:
                 player.current_room = player.current_room.n_to
-                print('\n\n')
+                print(f'\n{player.current_room.description}\n')
 
             else:
                 print('\n There is no room to the North! \n')
@@ -79,7 +86,7 @@ while active is True:
         elif command == 's':
             if player.current_room.s_to:
                 player.current_room = player.current_room.s_to
-                print('\n\n')
+                print(f'\n{player.current_room.description}\n')
 
             else:
                 print('\n There is no room to the South! \n')
@@ -87,7 +94,7 @@ while active is True:
         elif command == 'e':
             if player.current_room.e_to:
                 player.current_room = player.current_room.e_to
-                print('\n\n')
+                print(f'\n{player.current_room.description}\n')
 
             else:
                 print('\n There is no room to the East! \n')
@@ -95,7 +102,7 @@ while active is True:
         elif command == 'w':
             if player.current_room.w_to:
                 player.current_room = player.current_room.w_to
-                print('\n\n')
+                print(f'\n{player.current_room.description}\n')
 
             else:
                 print('\n There is no room to the West! \n')
@@ -112,3 +119,5 @@ while active is True:
 
     # else:
         # logic for picking up items in the room
+
+print('\n\n*** Goodbye ***')
