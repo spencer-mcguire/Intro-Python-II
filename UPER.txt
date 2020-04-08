@@ -1,0 +1,5 @@
+Thinking for the game 
+
+
+create class Room 
+    - needs 
