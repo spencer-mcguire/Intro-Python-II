@@ -144,18 +144,32 @@ while active == True:
 
     else:
         """logic for picking up items in the room"""
-        if command[0] == 'get' or 'g':
+
+        if command[0] == 'get':
+
             if command[1] in room_items:
+
                 player.add_inventory(items[command[1]])
 
-            for i, item in enumerate(room_items):
-                if item == command[1]:
-                    del current_room.item_list[i]
-                    break
-                else:
-                    print(f"{command[1]} does not exist here")
+                for i, item in enumerate(room_items):
+                    if item == command[1]:
+                        del current_room.item_list[i]
 
-        elif commmand[0] == 'drop' or 'd':
-            if command[1] in player.inventory:
-                print('sure is')
+            else:
+                print(f"{command[1]} does not exist here")
+
+        elif command[0] == 'drop':
+
+            if command[1] in player_items:
+
+                current_room.add_item(items[command[1]])
+
+                for i, item in enumerate(player_items):
+                    if item == command[1]:
+                        del player.inventory[i]
+
+            else:
+                print(f"{command[1]} is not in your inventory. Try again...")
+
+
 print('\n\n*** Goodbye ***')
