@@ -60,12 +60,14 @@ player = Player(user, room['outside'])
 # clear screen after name input
 os.system('cls')
 
+# Welcome splash
 
 print("==================================")
 print(f"Welcome brave {player.name}\n")
 print(f"Your current room is: {player.current_room.name}\n")
 print(f"{player.current_room.description}")
 print("==================================\n")
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -76,6 +78,7 @@ print("==================================\n")
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
 active = True
 
 while active == True:
@@ -83,6 +86,8 @@ while active == True:
     current_room = player.current_room
     room_items = [item.name for item in current_room.item_list]
     player_items = [item.name for item in player.inventory]
+
+    # Conditional rendering of inventories
 
     if len(room_items) == 0:
         pass
@@ -101,6 +106,7 @@ while active == True:
         command = command[0]
         # if no spaces found in input it means it is a direction of travel
         if command == 'n':
+
             if player.current_room.n_to:
                 player.current_room = player.current_room.n_to
                 print(f'\n{player.current_room.description}\n')
@@ -109,6 +115,7 @@ while active == True:
                 print('\n There is no room to the North! \n')
 
         elif command == 's':
+
             if player.current_room.s_to:
                 player.current_room = player.current_room.s_to
                 print(f'\n{player.current_room.description}\n')
@@ -117,6 +124,7 @@ while active == True:
                 print('\n There is no room to the South! \n')
 
         elif command == 'e':
+
             if player.current_room.e_to:
                 player.current_room = player.current_room.e_to
                 print(f'\n{player.current_room.description}\n')
@@ -125,6 +133,7 @@ while active == True:
                 print('\n There is no room to the East! \n')
 
         elif command == 'w':
+
             if player.current_room.w_to:
                 player.current_room = player.current_room.w_to
                 print(f'\n{player.current_room.description}\n')
@@ -133,9 +142,11 @@ while active == True:
                 print('\n There is no room to the West! \n')
 
         elif command == 'q':
+
             active = False
 
         else:
+
             print(f"""
                 {command} is not valid!
                 Use 'n', 's', 'e', 'w' to move to a differnt room. 
