@@ -26,3 +26,21 @@ create logic that
         - else display that there is no room there
 
 
+Day 2
+
+create class item
+    - needs : name
+              description
+* This will be the _base class_ for specialized item types to be declared
+    later.
+
+need a method to add the item to the room
+    - item.append(item)
+        return item
+
+add a list to Room using item=None 
+                        if item is None:
+                            item = []
+
+* Add functionality to the main loop that prints out all the items that are
+   visible to the player when they are in that room.
