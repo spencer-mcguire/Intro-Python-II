@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 import os
 
 # Clear screen and get ready to input name
@@ -25,6 +26,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+items = {
+    'dagger': Item('dagger', 'This sucker is sharp!'),
+    'sward': Item('sward', 'Yes, it is long..'),
+    'gold': Item('gold', 'Wahoo we are rich!')
+}
+
 
 # Link rooms together
 
@@ -37,6 +44,12 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add items to their rooms
+
+room['foyer'].add_item(items['dagger'])
+room['foyer'].add_item(items['sward'])
+room['treasure'].add_item(items['gold'])
+
 #
 # Main
 #
@@ -47,8 +60,9 @@ player = Player(user, room['outside'])
 # clear screen after name input
 os.system('cls')
 
+
 print("==================================")
-print(f"Welcome brave {player.name}")
+print(f"Welcome brave {player.name}\n")
 print(f"Your current room is: {player.current_room.name}\n")
 print(f"{player.current_room.description}")
 print("==================================\n")
@@ -67,10 +81,15 @@ active = True
 while active == True:
     # Destructure values
     current_room = player.current_room
+    room_items = [item.name for item in current_room.item_list]
+    if len(room_items) == 0:
+        pass
+    else:
+        print(f"Items in this room: {room_items}\n")
 
     # Commands
     command = input(
-        'Please provide a direction of travel [n][s][e][w]: ').lower().split(" ")
+        'Please provide a direction of travel [n][s][e][w] or [q]: ').lower().split(" ")
 
     if len(command) < 2:
         command = command[0]
