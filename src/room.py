@@ -18,6 +18,3 @@ class Room:
 
     def add_item(self, item):
         self.item_list.append(item)
-
-    def __str__(self):
-        return f"Room items : {self.item_list}"

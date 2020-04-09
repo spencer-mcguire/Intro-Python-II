@@ -12,5 +12,8 @@ class Player:
         else:
             self.inventory = inventory
 
+    def add_inventory(self, item):
+        self.inventory.append(item)
+
     def __str__(self):
         return f"Inventory : {self.inventory}"

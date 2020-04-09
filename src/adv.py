@@ -82,15 +82,21 @@ while active == True:
     # Destructure values
     current_room = player.current_room
     room_items = [item.name for item in current_room.item_list]
+    player_items = [item.name for item in player.inventory]
+
     if len(room_items) == 0:
         pass
     else:
-        print(f"Items in this room: {room_items}\n")
+        print(f"Items in this room: {room_items}")
+
+    if len(player_items) == 0:
+        pass
+    else:
+        print(f"You have: {player_items}\n")
 
     # Commands
     command = input(
         'Please provide a direction of travel [n][s][e][w] or [q]: ').lower().split(" ")
-
     if len(command) < 2:
         command = command[0]
         # if no spaces found in input it means it is a direction of travel
@@ -136,7 +142,20 @@ while active == True:
                 Or use 'q' to quit the game.
                 """)
 
-    # else:
-        # logic for picking up items in the room
+    else:
+        """logic for picking up items in the room"""
+        if command[0] == 'get' or 'g':
+            if command[1] in room_items:
+                player.add_inventory(items[command[1]])
 
+            for i, item in enumerate(room_items):
+                if item == command[1]:
+                    del current_room.item_list[i]
+                    break
+                else:
+                    print(f"{command[1]} does not exist here")
+
+        elif commmand[0] == 'drop' or 'd':
+            if command[1] in player.inventory:
+                print('sure is')
 print('\n\n*** Goodbye ***')
