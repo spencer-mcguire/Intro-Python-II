@@ -1,0 +1,46 @@
+Thinking for the game 
+
+DAY 1
+
+create class Room 
+    - needs : name
+              description
+              n"
+              s"
+              e"
+              w_to
+
+create class Player
+    - needs : name    
+              current Room
+
+create while true loop to keep the game running
+
+create logic that 
+    - takes in a user input and decides if its valid 
+    - takes in [n] [e] [s] [w]
+        - compares the input in lower case to hard coded nesw
+        - if .X_to exists in hard coded data
+            - sets the X_to value to player.current_room
+            - display the discription to the new Room
+        - else display that there is no room there
+
+
+Day 2
+
+create class item
+    - needs : name
+              description
+* This will be the _base class_ for specialized item types to be declared
+    later.
+
+need a method to add the item to the room
+    - item.append(item)
+        return item
+
+add a list to Room using item=None 
+                        if item is None:
+                            item = []
+
+* Add functionality to the main loop that prints out all the items that are
+   visible to the player when they are in that room.
