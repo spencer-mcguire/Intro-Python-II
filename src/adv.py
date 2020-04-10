@@ -28,7 +28,7 @@ earlier adventurers. The only exit is to the south."""),
 
 items = {
     'dagger': Item('dagger', 'This sucker is sharp!'),
-    'sward': Item('sward', 'Yes, it is long..'),
+    'sword': Item('sword', 'Yes, it is long..'),
     'gold': Item('gold', 'Wahoo we are rich!')
 }
 
@@ -47,7 +47,7 @@ room['treasure'].s_to = room['narrow']
 # Add items to their rooms
 
 room['foyer'].add_item(items['dagger'])
-room['foyer'].add_item(items['sward'])
+room['foyer'].add_item(items['sword'])
 room['treasure'].add_item(items['gold'])
 
 #
