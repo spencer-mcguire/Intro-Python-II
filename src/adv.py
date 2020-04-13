@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 import os
 
 # Clear screen and get ready to input name
@@ -25,6 +26,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+items = {
+    'dagger': Item('dagger', 'This sucker is sharp!'),
+    'sword': Item('sword', 'Yes, it is long..'),
+    'gold': Item('gold', 'Wahoo we are rich!')
+}
+
 
 # Link rooms together
 
@@ -37,6 +44,12 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add items to their rooms
+
+room['foyer'].add_item(items['dagger'])
+room['foyer'].add_item(items['sword'])
+room['treasure'].add_item(items['gold'])
+
 #
 # Main
 #
@@ -47,11 +60,14 @@ player = Player(user, room['outside'])
 # clear screen after name input
 os.system('cls')
 
+# Welcome splash
+
 print("==================================")
-print(f"Welcome brave {player.name}")
+print(f"Welcome brave {player.name}\n")
 print(f"Your current room is: {player.current_room.name}\n")
 print(f"{player.current_room.description}")
 print("==================================\n")
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -62,20 +78,35 @@ print("==================================\n")
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
 active = True
 
 while active == True:
     # Destructure values
     current_room = player.current_room
+    room_items = [item.name for item in current_room.item_list]
+    player_items = [item.name for item in player.inventory]
+
+    # Conditional rendering of inventories
+
+    if len(room_items) == 0:
+        pass
+    else:
+        print(f"Items in this room: {room_items}")
+
+    if len(player_items) == 0:
+        pass
+    else:
+        print(f"You have: {player_items}\n")
 
     # Commands
     command = input(
-        'Please provide a direction of travel [n][s][e][w]: ').lower().split(" ")
-
+        'Please provide a direction of travel [n][s][e][w] or [q]: ').lower().split(" ")
     if len(command) < 2:
         command = command[0]
         # if no spaces found in input it means it is a direction of travel
         if command == 'n':
+
             if player.current_room.n_to:
                 player.current_room = player.current_room.n_to
                 print(f'\n{player.current_room.description}\n')
@@ -84,6 +115,7 @@ while active == True:
                 print('\n There is no room to the North! \n')
 
         elif command == 's':
+
             if player.current_room.s_to:
                 player.current_room = player.current_room.s_to
                 print(f'\n{player.current_room.description}\n')
@@ -92,6 +124,7 @@ while active == True:
                 print('\n There is no room to the South! \n')
 
         elif command == 'e':
+
             if player.current_room.e_to:
                 player.current_room = player.current_room.e_to
                 print(f'\n{player.current_room.description}\n')
@@ -100,6 +133,7 @@ while active == True:
                 print('\n There is no room to the East! \n')
 
         elif command == 'w':
+
             if player.current_room.w_to:
                 player.current_room = player.current_room.w_to
                 print(f'\n{player.current_room.description}\n')
@@ -108,16 +142,45 @@ while active == True:
                 print('\n There is no room to the West! \n')
 
         elif command == 'q':
+
             active = False
 
         else:
+
             print(f"""
                 {command} is not valid!
                 Use 'n', 's', 'e', 'w' to move to a differnt room. 
                 Or use 'q' to quit the game.
                 """)
 
-    # else:
-        # logic for picking up items in the room
+    else:
+        """logic for picking up items in the room"""
+
+        if command[0] == 'get':
+
+            if command[1] in room_items:
+
+                player.add_inventory(items[command[1]])
+
+                for i, item in enumerate(room_items):
+                    if item == command[1]:
+                        del current_room.item_list[i]
+
+            else:
+                print(f"{command[1]} does not exist here")
+
+        elif command[0] == 'drop':
+
+            if command[1] in player_items:
+
+                current_room.add_item(items[command[1]])
+
+                for i, item in enumerate(player_items):
+                    if item == command[1]:
+                        del player.inventory[i]
+
+            else:
+                print(f"{command[1]} is not in your inventory. Try again...")
+
 
 print('\n\n*** Goodbye ***')
